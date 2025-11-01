@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2 import sql
 from datetime import datetime
 
-# 🔹 PostgreSQL ulanish ma'lumotlari
+#  PostgreSQL ulanish ma'lumotlari
 DB_NAME = "contactdb"
 DB_USER = "postgres"
 DB_PASS = "12345"
@@ -39,10 +39,10 @@ def create_table():
     """)
     conn.commit()
     conn.close()
-    print("✅ Jadval tayyor (contacts).")
+    print("Jadval tayyor (contacts).")
 
 
-# 🔹 Kontakt qo‘shish
+#  Kontakt qo‘shish
 def add_contact(name, phone):
     conn = get_connection()
     cur = conn.cursor()
@@ -52,14 +52,14 @@ def add_contact(name, phone):
             VALUES (%s, %s)
         """, (name, phone))
         conn.commit()
-        print(f"✅ Qo‘shildi: {name} — {phone}")
+        print(f" Qo‘shildi: {name} — {phone}")
     except psycopg2.errors.UniqueViolation:
-        print("⚠️ Bu telefon raqami allaqachon mavjud.")
+        print(" Bu telefon raqami allaqachon mavjud.")
     finally:
         conn.close()
 
 
-# 🔹 Barcha kontaktlarni ko‘rish
+#  Barcha kontaktlarni ko‘rish
 def list_contacts():
     conn = get_connection()
     cur = conn.cursor()
@@ -67,7 +67,7 @@ def list_contacts():
     rows = cur.fetchall()
 
     if not rows:
-        print("📭 Kontaktlar yo‘q.")
+        print("Kontaktlar yo‘q.")
     else:
         print(f"{'ID':<5} {'NAME':<20} {'PHONE':<15} {'CREATED_AT'}")
         print("-" * 60)
@@ -84,17 +84,17 @@ def delete_contact(contact_id):
     cur.execute("DELETE FROM contacts WHERE id = %s", (contact_id,))
     conn.commit()
     if cur.rowcount > 0:
-        print(f"🗑️ ID={contact_id} o‘chirildi.")
+        print(f" ID={contact_id} o‘chirildi.")
     else:
-        print(f"❌ ID={contact_id} topilmadi.")
+        print(f" ID={contact_id} topilmadi.")
     conn.close()
 
 
-# 🔹 Bosh menyu
+# Bosh menyu
 def main():
     while True:
         print("""
-===== 📇 CONTACT MANAGER =====
+=====  CONTACT MANAGER =====
 1. Jadval yaratish
 2. Kontakt qo‘shish
 3. Barcha kontaktlarni ko‘rish
@@ -115,10 +115,10 @@ def main():
             cid = input("O‘chiriladigan kontakt ID sini kiriting: ")
             delete_contact(cid)
         elif tanlov == "5":
-            print("Dastur tugadi. 👋")
+            print("Dastur tugadi.")
             break
         else:
-            print("❌ Noto‘g‘ri tanlov!")
+            print(" Noto‘g‘ri tanlov!")
 
 
 if __name__ == "__main__":
